@@ -81,9 +81,10 @@ class Entity:
         """
         Add callbacks that should be triggered when given method called
         """
-        if method_name not in cls._methods_subscriptions:
-            cls._methods_subscriptions[entity_name + '_' + method_name] = []
-        cls._methods_subscriptions[entity_name + '_' + method_name].append(func)
+        method_hash = entity_name + '_' + method_name
+        if method_hash not in cls._methods_subscriptions:
+            cls._methods_subscriptions[method_hash] = []
+        cls._methods_subscriptions[method_hash].append(func)
 
     @classmethod
     def subscribe_property_change(cls, entity_name: str, prop_name: str, func: Callable):
@@ -91,7 +92,7 @@ class Entity:
         Add callbacks that should be triggered when given method called
         """
         prop_hash = entity_name + '_' + prop_name
-        if prop_name not in cls._properties_subscriptions:
+        if prop_hash not in cls._properties_subscriptions:
             cls._properties_subscriptions[prop_hash] = []
         cls._properties_subscriptions[prop_hash].append(func)
 
@@ -101,7 +102,7 @@ class Entity:
     ):
 
         prop_hash = entity_name + "_" + prop_path
-        if prop_path not in cls._nested_properties_subscription:
+        if prop_hash not in cls._nested_properties_subscription:
             cls._nested_properties_subscription[prop_hash] = []
         cls._nested_properties_subscription[prop_hash].append(func)
 
